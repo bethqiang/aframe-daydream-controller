@@ -262,7 +262,7 @@
 	  onAxisMove: function (evt) {
 	    // this.axisPosition
 	    //
-	    console.log('axismove',evt.detail);
+	    // console.log('axismove',evt.detail);
 	    // this.lastAxisMovement = {
 	    //   time: Date.now(),
 	    //   x: 0,
@@ -354,7 +354,7 @@
 	        y: THREE.Math.radToDeg(controllerEuler.y),
 	        z: THREE.Math.radToDeg(controllerEuler.z) + this.data.rotationOffset
 	      });
-	      console.log(modelPose.position);
+	      // console.log(modelPose.position);
 	      el.setAttribute('position', {
 	        x: modelPose.position.x,
 	        y: modelPose.position.y,
