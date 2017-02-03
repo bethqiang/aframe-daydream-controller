@@ -14,7 +14,7 @@
         <a-sphere id="position-guide" radius="0.05" position="0 0 -4"></a-sphere>
       </a-entity>
     </a-entity>
-    <a-plane id="ground" class="selectable" color="green" height="100" width="100" position="0 0 0" rotation="-90 0 0"></a-plane>
+    <a-box id="ground" class="selectable" color="green" depth="100" height="0.1" width="100" position="0 -0.05 0"></a-box>
     <a-box id="box" class="selectable" material="color:orange; shader: flat" position="0 1 -4"></a-box>
     <a-sky color="blue"></a-sky>
   </a-scene>
@@ -24,6 +24,8 @@
     var box = document.querySelector('#box');
     var ground = document.querySelector('#ground');
     var ray = document.querySelector('#ray');
+    var sphere = document.querySelector('#position-guide');
+    var intersection;
     var touchStartAxes;
     var minScale = 0.1;
     var scaleMultiplier = 1;
@@ -31,12 +33,11 @@
     var focused = false;
 
     // ground color change
-    ground.addEventListener('raycaster-intersected', function () {
-      if (focused) return;
+    ground.addEventListener('raycaster-intersected', function (e) {
       focused = true;
-      ground.setAttribute('color','purple');
-      console.log(ray.object3D.getWorldPosition())
-    })
+      // console.log(e.detail.intersection.distance);
+      intersection = e.detail.intersection.point;
+    });
     ground.addEventListener('raycaster-intersected-cleared', function () {
       focused = false;
       ground.setAttribute('color','green');
@@ -58,14 +59,18 @@
       currentScale = newScale;
     });
     remote.addEventListener('buttondown', function (e) {
-      box.setAttribute('color','black');
-    });
-    remote.addEventListener('buttonup', function (e) {
       if (focused) {
-        box.setAttribute('color','purple');
+        console.log(intersection);
       } else {
         box.setAttribute('color','orange');
       }
     });
+    // remote.addEventListener('buttonup', function (e) {
+    //   if (focused) {
+    //     box.setAttribute('color','purple');
+    //   } else {
+    //     box.setAttribute('color','orange');
+    //   }
+    // });
   </script>
 </body>
