@@ -8,7 +8,8 @@
 <body>
   <a-scene>
     <!-- you & your controller -->
-    <a-entity position="0 1.3 0">
+    <a-entity id="you" position="0 1.6 0">
+      <a-camera></a-camera>
       <a-entity id="remote" daydream-controller raycaster="objects: .selectable">
         <a-cone id="ray" color="cyan" position="0 0 -2" rotation="-90 0 0" radius-bottom="0.005" radius-top="0.001" height="4"></a-cone>
         <a-sphere id="position-guide" radius="0.05" position="0 0 -4"></a-sphere>
@@ -35,6 +36,7 @@
   </a-scene>
 
   <script>
+    const you = document.getElementById('you');
     const remote = document.getElementById('remote');
     const ground = document.getElementById('ground');
     let intersection;
@@ -47,12 +49,12 @@
 
     ground.addEventListener('raycaster-intersected-cleared', function () {
       focused = false;
-      ground.setAttribute('color','green');
     })
 
     remote.addEventListener('buttondown', function (e) {
       if (focused) {
-        console.log(intersection);
+        console.log(`moving to ${intersection.x} 1.6 ${intersection.z}`);
+        you.setAttribute('position', `${intersection.x} 1.6 ${intersection.z}`);
       }
     });
   </script>
